@@ -19501,7 +19501,7 @@ const Body = ()=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: resList.map((item)=>{
                     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(RestaurantCard, {
                         resData: item
-                    }, void 0, false, {
+                    }, item.info.id, false, {
                         fileName: "src/Body.jsx",
                         lineNumber: 798,
                         columnNumber: 22
