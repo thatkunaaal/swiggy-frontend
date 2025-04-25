@@ -18640,39 +18640,73 @@ parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _restaurant = require("./Restaurant");
 var _restaurantDefault = parcelHelpers.interopDefault(_restaurant);
-var _mockData = require("../utils/mockData");
 var _react = require("react");
+var _shimmerUI = require("./ShimmerUI");
+var _shimmerUIDefault = parcelHelpers.interopDefault(_shimmerUI);
 var _s = $RefreshSig$();
 const Body = ()=>{
     _s();
     const [toggle, setToggle] = (0, _react.useState)(true);
-    const [listOfRestaurant, setListOfRestaurant] = (0, _react.useState)((0, _mockData.resList));
+    const [listOfRestaurant, setListOfRestaurant] = (0, _react.useState)([]);
+    const [searchText, setSearchText] = (0, _react.useState)('');
+    const [allRestaurantList, setAllRestaurantList] = (0, _react.useState)([]);
+    (0, _react.useEffect)(()=>{
+        //Side-Effect function
+        fetchData();
+    }, []);
+    const fetchData = async ()=>{
+        const res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.15451596634846&lng=72.99696508795024&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        const data = await res.json();
+        const resList = data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+        console.log(resList);
+        setListOfRestaurant(resList);
+        setAllRestaurantList(resList);
+    };
     const filterTopRestaurant = ()=>{
         if (toggle) {
             const filteredRestaurant = listOfRestaurant.filter((restaurant)=>restaurant.info.avgRating >= 4.5);
             setListOfRestaurant(filteredRestaurant);
-        } else setListOfRestaurant((0, _mockData.resList));
+        } else fetchData();
         setToggle(!toggle);
     };
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+    const searchRestaurant = async (searchText)=>{
+        const filteredRestaurant = allRestaurantList.filter((res)=>{
+            return res.info.name.toLowerCase().includes(searchText.toLowerCase());
+        });
+        setListOfRestaurant(filteredRestaurant);
+    };
+    return listOfRestaurant.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _shimmerUIDefault.default), {}, void 0, false, {
+            fileName: "src/component/Body.jsx",
+            lineNumber: 53,
+            columnNumber: 9
+        }, undefined)
+    }, void 0, false, {
+        fileName: "src/component/Body.jsx",
+        lineNumber: 52,
+        columnNumber: 7
+    }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "Body-containter",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "search-box",
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                        placeholder: "Enter the restaurant to search"
+                        placeholder: "Enter the restaurant to search",
+                        value: searchText,
+                        onChange: (e)=>setSearchText(e.target.value)
                     }, void 0, false, {
                         fileName: "src/component/Body.jsx",
-                        lineNumber: 23,
-                        columnNumber: 9
+                        lineNumber: 58,
+                        columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        onClick: ()=>searchRestaurant(searchText),
                         children: "Search"
                     }, void 0, false, {
                         fileName: "src/component/Body.jsx",
-                        lineNumber: 24,
-                        columnNumber: 9
+                        lineNumber: 59,
+                        columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                         className: "top-restaurant-btn",
@@ -18680,14 +18714,14 @@ const Body = ()=>{
                         children: toggle ? "Top Restaurant" : "All Restaurant"
                     }, void 0, false, {
                         fileName: "src/component/Body.jsx",
-                        lineNumber: 25,
-                        columnNumber: 9
+                        lineNumber: 60,
+                        columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/component/Body.jsx",
-                lineNumber: 22,
-                columnNumber: 7
+                lineNumber: 57,
+                columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "restaurant-container",
@@ -18696,23 +18730,23 @@ const Body = ()=>{
                         resData: item
                     }, item.info.id, false, {
                         fileName: "src/component/Body.jsx",
-                        lineNumber: 29,
-                        columnNumber: 18
+                        lineNumber: 66,
+                        columnNumber: 20
                     }, undefined);
                 })
             }, void 0, false, {
                 fileName: "src/component/Body.jsx",
-                lineNumber: 27,
-                columnNumber: 7
+                lineNumber: 64,
+                columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/component/Body.jsx",
-        lineNumber: 21,
-        columnNumber: 5
+        lineNumber: 56,
+        columnNumber: 7
     }, undefined);
 };
-_s(Body, "dH3JAxictcEp8mkGptLu6TufEMQ=");
+_s(Body, "t9XI1iKdD+n6DodTXGPKZLTwRNQ=");
 _c = Body;
 exports.default = Body;
 var _c;
@@ -18723,7 +18757,7 @@ $RefreshReg$(_c, "Body");
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi","./Restaurant":"fcmLt","../utils/mockData":"4sSQA","react":"jMk1U"}],"fcmLt":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"dVPUn","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi","./Restaurant":"fcmLt","react":"jMk1U","./ShimmerUI":"1j27o"}],"fcmLt":[function(require,module,exports,__globalThis) {
 var $parcel$ReactRefreshHelpers$e99c = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 $parcel$ReactRefreshHelpers$e99c.init();
 var prevRefreshReg = globalThis.$RefreshReg$;
@@ -18813,780 +18847,94 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "CLOUD_URL", ()=>CLOUD_URL);
 const CLOUD_URL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"4sSQA":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1j27o":[function(require,module,exports,__globalThis) {
+var $parcel$ReactRefreshHelpers$61c4 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+$parcel$ReactRefreshHelpers$61c4.init();
+var prevRefreshReg = globalThis.$RefreshReg$;
+var prevRefreshSig = globalThis.$RefreshSig$;
+$parcel$ReactRefreshHelpers$61c4.prelude(module);
+
+try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "resList", ()=>resList);
-const resList = [
-    {
-        "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-        "info": {
-            "id": "278213",
-            "name": "Theobroma",
-            "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2025/4/9/fe7bbe88-0c9c-407a-aec1-840788a0b0a4_278213.jpg",
-            "locality": "Thane",
-            "areaName": "Airoli Navi Mumbai",
-            "costForTwo": "\u20B9400 for two",
-            "cuisines": [
-                "Bakery",
-                "Desserts"
-            ],
-            "avgRating": 4.6,
-            "parentId": "1040",
-            "avgRatingString": "4.6",
-            "totalRatingsString": "1.1K+",
-            "sla": {
-                "deliveryTime": 16,
-                "lastMileTravel": 1.2,
-                "serviceability": "SERVICEABLE",
-                "slaString": "15-20 mins",
-                "lastMileTravelString": "1.2 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2025-04-21 23:59:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "bolt/bolt%206.png",
-                        "description": "bolt!"
-                    },
-                    {
-                        "imageId": "Rxawards/_CATEGORY-Desserts.png",
-                        "description": "Delivery!"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "bolt!",
-                                    "imageId": "bolt/bolt%206.png"
-                                }
-                            },
-                            {
-                                "attributes": {
-                                    "description": "Delivery!",
-                                    "imageId": "Rxawards/_CATEGORY-Desserts.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "20% OFF",
-                "discountTag": "FLAT DEAL"
-            },
-            "orderabilityCommunication": {
-                "title": {},
-                "subTitle": {},
-                "message": {},
-                "customIcon": {}
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {},
-            "externalRatings": {
-                "aggregatedRating": {
-                    "rating": "--"
-                }
-            },
-            "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _indexCss = require("../css/index.css");
+const ShimmerUI = ()=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "restaurant-container",
+        style: {
+            marginLeft: "20px",
+            marginTop: "60px"
         },
-        "analytics": {
-            "context": "seo-data-24b2138a-28ff-4d23-8d1e-d2d7541529f9"
-        },
-        "cta": {
-            "link": "https://www.swiggy.com/city/mumbai/theobroma-thane-airoli-navi-mumbai-rest278213",
-            "text": "RESTAURANT_MENU",
-            "type": "WEBLINK"
-        },
-        "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
-    },
-    {
-        "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-        "info": {
-            "id": "32928",
-            "name": "Chaayos Chai+Snacks=Relax",
-            "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2024/4/17/2ce18342-6c04-4ebc-9725-788819ddaa56_32928.JPG",
-            "locality": "Runwal Galleria",
-            "areaName": "R Galleria",
-            "costForTwo": "\u20B9250 for two",
-            "cuisines": [
-                "Beverages",
-                "Chaat",
-                "Snacks",
-                "Bakery",
-                "Street Food",
-                "healthy",
-                "Home Food",
-                "Maharashtrian",
-                "Italian",
-                "Desserts"
-            ],
-            "avgRating": 4.6,
-            "parentId": "281782",
-            "avgRatingString": "4.6",
-            "totalRatingsString": "7.7K+",
-            "sla": {
-                "deliveryTime": 36,
-                "lastMileTravel": 6.8,
-                "serviceability": "SERVICEABLE",
-                "slaString": "35-40 mins",
-                "lastMileTravelString": "6.8 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2025-04-21 23:00:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "Rxawards/_CATEGORY-Cafe%20&%20Chai.png",
-                        "description": "Delivery!"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "Delivery!",
-                                    "imageId": "Rxawards/_CATEGORY-Cafe%20&%20Chai.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "ITEMS",
-                "subHeader": "AT \u20B984"
-            },
-            "orderabilityCommunication": {
-                "title": {},
-                "subTitle": {},
-                "message": {},
-                "customIcon": {}
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {},
-            "externalRatings": {
-                "aggregatedRating": {
-                    "rating": "--"
-                }
-            },
-            "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-        },
-        "analytics": {
-            "context": "seo-data-24b2138a-28ff-4d23-8d1e-d2d7541529f9"
-        },
-        "cta": {
-            "link": "https://www.swiggy.com/city/mumbai/chaayos-chai-snacks-relax-runwal-galleria-r-galleria-rest32928",
-            "text": "RESTAURANT_MENU",
-            "type": "WEBLINK"
-        },
-        "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
-    },
-    {
-        "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-        "info": {
-            "id": "30241",
-            "name": "McDonald's",
-            "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2025/3/20/d28dbc57-6c81-4e2a-aa63-5a6fcf9fc690_30241.JPG",
-            "locality": "Navi Mumbai",
-            "areaName": "Airoli",
-            "costForTwo": "\u20B9400 for two",
-            "cuisines": [
-                "Burgers",
-                "Beverages",
-                "Cafe",
-                "Desserts"
-            ],
-            "avgRating": 4.6,
-            "parentId": "630",
-            "avgRatingString": "4.6",
-            "totalRatingsString": "22K+",
-            "sla": {
-                "deliveryTime": 18,
-                "lastMileTravel": 0.8,
-                "serviceability": "SERVICEABLE",
-                "slaString": "15-20 mins",
-                "lastMileTravelString": "0.8 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2025-04-21 23:59:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "bolt/bolt%206.png",
-                        "description": "bolt!"
-                    },
-                    {
-                        "imageId": "Rxawards/_CATEGORY-Burger.png",
-                        "description": "Delivery!"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "bolt!",
-                                    "imageId": "bolt/bolt%206.png"
-                                }
-                            },
-                            {
-                                "attributes": {
-                                    "description": "Delivery!",
-                                    "imageId": "Rxawards/_CATEGORY-Burger.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "ITEMS",
-                "subHeader": "AT \u20B999"
-            },
-            "orderabilityCommunication": {
-                "title": {},
-                "subTitle": {},
-                "message": {},
-                "customIcon": {}
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {},
-            "externalRatings": {
-                "aggregatedRating": {
-                    "rating": "--"
-                }
-            },
-            "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-        },
-        "analytics": {
-            "context": "seo-data-24b2138a-28ff-4d23-8d1e-d2d7541529f9"
-        },
-        "cta": {
-            "link": "https://www.swiggy.com/city/mumbai/mcdonalds-navi-airoli-rest30241",
-            "text": "RESTAURANT_MENU",
-            "type": "WEBLINK"
-        },
-        "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
-    },
-    {
-        "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-        "info": {
-            "id": "415842",
-            "name": "Subway",
-            "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2025/1/21/89661ccd-a511-412b-9e04-61955ff2b8bd_415842.JPG",
-            "locality": "Dynasty",
-            "areaName": "Airoli",
-            "costForTwo": "\u20B9400 for two",
-            "cuisines": [
-                "sandwich",
-                "Salads",
-                "wrap",
-                "Healthy Food"
-            ],
-            "avgRating": 4.3,
-            "parentId": "2",
-            "avgRatingString": "4.3",
-            "totalRatingsString": "1.6K+",
-            "sla": {
-                "deliveryTime": 25,
-                "lastMileTravel": 0.9,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25-30 mins",
-                "lastMileTravelString": "0.9 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2025-04-22 03:00:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "bolt/bolt%206.png",
-                        "description": "bolt!"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "aggregatedDiscountInfoV2": {},
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "bolt!",
-                                    "imageId": "bolt/bolt%206.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "orderabilityCommunication": {
-                "title": {},
-                "subTitle": {},
-                "message": {},
-                "customIcon": {}
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {},
-            "externalRatings": {
-                "aggregatedRating": {
-                    "rating": "--"
-                }
-            },
-            "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-        },
-        "analytics": {
-            "context": "seo-data-24b2138a-28ff-4d23-8d1e-d2d7541529f9"
-        },
-        "cta": {
-            "link": "https://www.swiggy.com/city/mumbai/subway-dynasty-airoli-rest415842",
-            "text": "RESTAURANT_MENU",
-            "type": "WEBLINK"
-        },
-        "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
-    },
-    {
-        "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-        "info": {
-            "id": "34932",
-            "name": "Burger King",
-            "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2025/3/24/5c8fa86b-2826-437a-9cf3-45b2644ef464_34932.jpg",
-            "locality": "Navi Mumbai",
-            "areaName": "Ghansoli",
-            "costForTwo": "\u20B9350 for two",
-            "cuisines": [
-                "Burgers",
-                "American"
-            ],
-            "avgRating": 4.4,
-            "parentId": "166",
-            "avgRatingString": "4.4",
-            "totalRatingsString": "45K+",
-            "sla": {
-                "deliveryTime": 34,
-                "lastMileTravel": 5,
-                "serviceability": "SERVICEABLE",
-                "slaString": "30-35 mins",
-                "lastMileTravelString": "5.0 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2025-04-22 06:00:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "60% OFF",
-                "subHeader": "UPTO \u20B9120"
-            },
-            "orderabilityCommunication": {
-                "title": {},
-                "subTitle": {},
-                "message": {},
-                "customIcon": {}
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {},
-            "externalRatings": {
-                "aggregatedRating": {
-                    "rating": "--"
-                }
-            },
-            "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-        },
-        "analytics": {
-            "context": "seo-data-24b2138a-28ff-4d23-8d1e-d2d7541529f9"
-        },
-        "cta": {
-            "link": "https://www.swiggy.com/city/mumbai/burger-king-navi-ghansoli-rest34932",
-            "text": "RESTAURANT_MENU",
-            "type": "WEBLINK"
-        },
-        "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
-    },
-    {
-        "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-        "info": {
-            "id": "103822",
-            "name": "Starbucks Coffee",
-            "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2025/3/17/03ff03af-f837-4adf-a4dc-fdf57d3b8131_103822.JPG",
-            "locality": "Runwal Greens",
-            "areaName": "Bhandup West",
-            "costForTwo": "\u20B9400 for two",
-            "cuisines": [
-                "Beverages",
-                "Cafe",
-                "Snacks",
-                "Desserts",
-                "Bakery",
-                "Ice Cream"
-            ],
-            "avgRating": 4.3,
-            "parentId": "195515",
-            "avgRatingString": "4.3",
-            "totalRatingsString": "4.4K+",
-            "sla": {
-                "deliveryTime": 35,
-                "lastMileTravel": 6.8,
-                "serviceability": "SERVICEABLE",
-                "slaString": "30-35 mins",
-                "lastMileTravelString": "6.8 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2025-04-21 23:59:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "Rxawards/_CATEGORY-Cafe%20&%20Chai.png",
-                        "description": "Delivery!"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "Delivery!",
-                                    "imageId": "Rxawards/_CATEGORY-Cafe%20&%20Chai.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "ITEMS",
-                "subHeader": "AT \u20B9197"
-            },
-            "orderabilityCommunication": {
-                "title": {},
-                "subTitle": {},
-                "message": {},
-                "customIcon": {}
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {},
-            "externalRatings": {
-                "aggregatedRating": {
-                    "rating": "--"
-                }
-            },
-            "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-        },
-        "analytics": {
-            "context": "seo-data-24b2138a-28ff-4d23-8d1e-d2d7541529f9"
-        },
-        "cta": {
-            "link": "https://www.swiggy.com/city/mumbai/starbucks-coffee-runwal-greens-bhandup-west-rest103822",
-            "text": "RESTAURANT_MENU",
-            "type": "WEBLINK"
-        },
-        "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
-    },
-    {
-        "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-        "info": {
-            "id": "547462",
-            "name": "Hot Chips",
-            "cloudinaryImageId": "ci6n1hkjoqghlzsv9zr7",
-            "locality": "Thane Zone-2",
-            "areaName": "Airoli",
-            "costForTwo": "\u20B9300 for two",
-            "cuisines": [
-                "Snacks",
-                "Sweets"
-            ],
-            "avgRating": 4.6,
-            "veg": true,
-            "parentId": "471",
-            "avgRatingString": "4.6",
-            "totalRatingsString": "140",
-            "sla": {
-                "deliveryTime": 17,
-                "lastMileTravel": 0.9,
-                "serviceability": "SERVICEABLE",
-                "slaString": "15-20 mins",
-                "lastMileTravelString": "0.9 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2025-04-21 23:00:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "bolt/bolt%206.png",
-                        "description": "bolt!"
-                    },
-                    {
-                        "imageId": "v1695133679/badges/Pure_Veg111.png",
-                        "description": "pureveg"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "aggregatedDiscountInfoV2": {},
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "bolt!",
-                                    "imageId": "bolt/bolt%206.png"
-                                }
-                            },
-                            {
-                                "attributes": {
-                                    "description": "pureveg",
-                                    "imageId": "v1695133679/badges/Pure_Veg111.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "orderabilityCommunication": {
-                "title": {},
-                "subTitle": {},
-                "message": {},
-                "customIcon": {}
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {},
-            "externalRatings": {
-                "aggregatedRating": {
-                    "rating": "--"
-                }
-            },
-            "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-        },
-        "analytics": {
-            "context": "seo-data-24b2138a-28ff-4d23-8d1e-d2d7541529f9"
-        },
-        "cta": {
-            "link": "https://www.swiggy.com/city/mumbai/hot-chips-thane-zone-2-airoli-rest547462",
-            "text": "RESTAURANT_MENU",
-            "type": "WEBLINK"
-        },
-        "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
-    },
-    {
-        "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-        "info": {
-            "id": "1010916",
-            "name": "Mani's Cafe",
-            "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2025/3/15/acc5e7c4-ca96-452b-b921-419b6d129869_1010916.jpg",
-            "locality": "Airoli",
-            "areaName": "Airoli",
-            "costForTwo": "\u20B9200 for two",
-            "cuisines": [
-                "South Indian"
-            ],
-            "avgRating": 4.3,
-            "veg": true,
-            "parentId": "131857",
-            "avgRatingString": "4.3",
-            "totalRatingsString": "107",
-            "sla": {
-                "deliveryTime": 26,
-                "lastMileTravel": 2.8,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25-30 mins",
-                "lastMileTravelString": "2.8 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2025-04-21 22:00:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "Rxawards/_CATEGORY-South%20Indian.png",
-                        "description": "Delivery!"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "aggregatedDiscountInfoV2": {},
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "Delivery!",
-                                    "imageId": "Rxawards/_CATEGORY-South%20Indian.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "orderabilityCommunication": {
-                "title": {},
-                "subTitle": {},
-                "message": {},
-                "customIcon": {}
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "isNewlyOnboarded": true,
-            "restaurantOfferPresentationInfo": {},
-            "externalRatings": {
-                "aggregatedRating": {
-                    "rating": "--"
-                }
-            },
-            "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-        },
-        "analytics": {
-            "context": "seo-data-24b2138a-28ff-4d23-8d1e-d2d7541529f9"
-        },
-        "cta": {
-            "link": "https://www.swiggy.com/city/mumbai/manis-cafe-airoli-rest1010916",
-            "text": "RESTAURANT_MENU",
-            "type": "WEBLINK"
-        },
-        "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
-    }
-];
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmerCard"
+            }, void 0, false, {
+                fileName: "src/component/ShimmerUI.jsx",
+                lineNumber: 7,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmerCard"
+            }, void 0, false, {
+                fileName: "src/component/ShimmerUI.jsx",
+                lineNumber: 8,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmerCard"
+            }, void 0, false, {
+                fileName: "src/component/ShimmerUI.jsx",
+                lineNumber: 9,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmerCard"
+            }, void 0, false, {
+                fileName: "src/component/ShimmerUI.jsx",
+                lineNumber: 10,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmerCard"
+            }, void 0, false, {
+                fileName: "src/component/ShimmerUI.jsx",
+                lineNumber: 11,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmerCard"
+            }, void 0, false, {
+                fileName: "src/component/ShimmerUI.jsx",
+                lineNumber: 12,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmerCard"
+            }, void 0, false, {
+                fileName: "src/component/ShimmerUI.jsx",
+                lineNumber: 13,
+                columnNumber: 7
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/component/ShimmerUI.jsx",
+        lineNumber: 6,
+        columnNumber: 5
+    }, undefined);
+};
+_c = ShimmerUI;
+exports.default = ShimmerUI;
+var _c;
+$RefreshReg$(_c, "ShimmerUI");
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["frqA7","hh6uc"], "hh6uc", "parcelRequire77dd", {}, null, null, "http://localhost:1234")
+  $parcel$ReactRefreshHelpers$61c4.postlude(module);
+} finally {
+  globalThis.$RefreshReg$ = prevRefreshReg;
+  globalThis.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","../css/index.css":"lyxGu","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"lyxGu":[function() {},{}]},["frqA7","hh6uc"], "hh6uc", "parcelRequire77dd", {}, null, null, "http://localhost:1234")
 
 //# sourceMappingURL=React.2c54e4d8.js.map
