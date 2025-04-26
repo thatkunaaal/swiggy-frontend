@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ".././css/index.css";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+
+  const [isLogin,setIsLogin] = useState(true);
+
+  
+  console.log("Navbar rendered");
   return (
     <>
       <div id="NavbarContainer">
@@ -72,9 +78,13 @@ const Navbar = () => {
         </svg>
         <div id="nav-items">
           <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Cart</li>
+            <li> <Link href="/">Home</Link></li>
+            <li> <Link to="/about">About Us</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/cart">Cart</Link></li>
+            <button className="navBar-btn" onClick={()=>{
+              setIsLogin(!isLogin);
+            }}>{isLogin ? "Logout" : "Login"}</button>
           </ul>
         </div>
       </div>
