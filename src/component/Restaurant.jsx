@@ -9,7 +9,7 @@ const RestaurantCard = (props) => {
     <div className="res-card">
       <img src={CLOUD_URL+cloudinaryImageId} />
       <h3>{name}</h3>
-      <div>⭐ {avgRating} . </div>
+      <div>⭐ {avgRating}  </div>
       <div>{slaString}</div>
       <div className="res-cards-description">
         {cuisines.join(", ")}
