@@ -3,10 +3,11 @@ import ReactDOM from "react-dom/client";
 import Navbar from "./component/Navbar";
 import Body from "./component/Body";
 import About from "./component/About";
-import {createBrowserRouter, Outlet, RouterProvider} from  "react-router-dom"
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Cart from "./component/Cart";
 import Error from "./component/Error";
 import Contact from "./component/Contact";
+import RestaurantMenu from "./component/RestaurantMenu";
 
 //React Element
 // const heading = <h1> Hello from JSX 🚀  </h1>
@@ -25,30 +26,35 @@ const App = () => {
   );
 };
 
-
 const appRouter = createBrowserRouter([
-  {path: "/",
+  {
+    path: "/",
     element: <App />,
     children: [
       {
-        path : "/",
-        element: <Body />
+        path: "/",
+        element: <Body />,
       },
       {
         path: "/about",
-        element: <About />
-      },{
-        path : "/cart",
-        element : <Cart />
-      },{
+        element: <About />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
         path: "/contact",
-        element : <Contact />
-      }
+        element: <Contact />,
+      },
+      {
+        path: "/restaurant/:resId",
+        element: <RestaurantMenu />,
+      },
     ],
-    errorElement: <Error />
+    errorElement: <Error />,
   },
- 
-])
+]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter}/>);
+root.render(<RouterProvider router={appRouter} />);

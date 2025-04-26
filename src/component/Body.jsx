@@ -1,6 +1,7 @@
 import RestaurantCard from "./Restaurant";
 import { useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [toggle, setToggle] = useState(true);
@@ -67,7 +68,7 @@ const Body = () => {
         </div>
         <div className="restaurant-container">
           {listOfRestaurant.map((item) => {
-            return <RestaurantCard key={item.info.id} resData={item} />;
+            return <Link to={"/restaurant/"+item.info.id} key={item.info.id}><RestaurantCard  resData={item} /></Link>;
           })}
         </div>
       </div>
