@@ -21,8 +21,8 @@ const Body = () => {
 
     const data = await res.json();
     const resList =
-      data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants;
+      data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants;  
     setListOfRestaurant(resList);
     setAllRestaurantList(resList);
   };
@@ -46,34 +46,36 @@ const Body = () => {
     setListOfRestaurant(filteredRestaurant);
   };
 
-  
+  if (!listOfRestaurant) return <ShimmerUI />;
 
-  {
-    return listOfRestaurant.length === 0 ? (
-      <h1>
-        <ShimmerUI />
-      </h1>
-    ) : (
-      <div className="Body-containter">
-        <div className="search-box">
-          <input
-            placeholder="Enter the restaurant to search"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <button onClick={() => searchRestaurant(searchText)}>Search</button>
-          <button className="top-restaurant-btn" onClick={filterTopRestaurant}>
-            {toggle ? "Top Restaurant" : "All Restaurant"}
-          </button>
-        </div>
-        <div className="restaurant-container">
-          {listOfRestaurant.map((item) => {
-            return <Link to={"/restaurant/"+item.info.id} key={item.info.id}><RestaurantCard  resData={item} /></Link>;
-          })}
-        </div>
+  return listOfRestaurant.length === 0 ? (
+    <h1>
+      <ShimmerUI />
+    </h1>
+  ) : (
+    <div className="Body-containter">
+      <div className="search-box">
+        <input
+          placeholder="Enter the restaurant to search"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <button onClick={() => searchRestaurant(searchText)}>Search</button>
+        <button className="top-restaurant-btn" onClick={filterTopRestaurant}>
+          {toggle ? "Top Restaurant" : "All Restaurant"}
+        </button>
       </div>
-    );
-  }
+      <div className="restaurant-container">
+        {listOfRestaurant.map((item) => {
+          return (
+            <Link to={"/restaurant/" + item.info.id} key={item.info.id}>
+              <RestaurantCard resData={item} />
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default Body;

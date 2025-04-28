@@ -17,7 +17,7 @@ const RestaurantMenu = () => {
         setResData(json); 
     }
 
-    if(resData === null)
+    if(resData === null )
         return <ShimmerUI />
 
     const {name,cuisines,costForTwoMessage,locality,totalRatingsString} = resData?.data?.cards[2]?.card?.card?.info;

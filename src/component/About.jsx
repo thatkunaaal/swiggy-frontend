@@ -8,8 +8,8 @@ const About = () => {
         <h1>About section</h1>
       </div>
 
-      <User />
-      <UserClass />
+      <User name={"Kishan Singh (function)"} />
+      <UserClass name={"Kishan Singh (class)"} />
     </div>
   );
 };
