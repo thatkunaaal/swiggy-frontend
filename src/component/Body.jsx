@@ -21,11 +21,13 @@ const Body = () => {
 
     const data = await res.json();
     const resList =
-      data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
+      data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;  
     setListOfRestaurant(resList);
     setAllRestaurantList(resList);
   };
+
+  console.log("Body rendered");
 
   const filterTopRestaurant = () => {
     if (toggle) {
