@@ -2,6 +2,7 @@ import RestaurantCard from "./Restaurant";
 import { useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [toggle, setToggle] = useState(true);
@@ -26,6 +27,16 @@ const Body = () => {
     setListOfRestaurant(resList);
     setAllRestaurantList(resList);
   };
+
+  const isConnected = useOnlineStatus();
+  if(!isConnected){
+      return (
+        <div style={{display: "flex", flexDirection : "column",justifyContent : "center" , alignItems : "center" , margin : "5vh"}}>
+            <h1>You are not connected to internet :/</h1>
+            <h3>Please check your connection.</h3>
+        </div>
+     )
+  }
 
   console.log("Body rendered");
 

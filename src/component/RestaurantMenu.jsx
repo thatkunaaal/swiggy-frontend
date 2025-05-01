@@ -3,11 +3,24 @@ import ShimmerUI from './ShimmerUI';
 import { useParams } from 'react-router-dom';
 import { MENU_URL } from '../utils/constant';
 import useRestaurantInfo from '../utils/useRestaurantInfo';
+import useOnlineStatus from '../utils/useOnlineStatus';
 
 const RestaurantMenu = () => {
     const {resId} = useParams();
-
     const resData = useRestaurantInfo(resId);
+
+    const isConnected = useOnlineStatus(); 
+    
+    if(!isConnected){
+        return (
+            <div style={{display: "flex", flexDirection : "column",justifyContent : "center" , alignItems : "center" , margin : "5vh"}}>
+                <h1>You are not connected to internet :/</h1>
+                <h3>Please check your connection.</h3>
+            </div>
+        )
+    }
+
+    
 
     if(resData === null )
         return <ShimmerUI />

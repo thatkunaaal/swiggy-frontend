@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import ".././css/index.css";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Navbar = () => {
 
   const [isLogin,setIsLogin] = useState(true);
 
-  
+  const isConnected = useOnlineStatus();
+
+
   console.log("Navbar rendered");
   return (
     <>
@@ -78,6 +81,7 @@ const Navbar = () => {
         </svg>
         <div id="nav-items">
           <ul>
+            <li>Online Status: {isConnected ? "☑️" : "🔴"}</li>
             <li> <Link href="/">Home</Link></li>
             <li> <Link to="/about">About Us</Link></li>
             <li><Link to="/contact">Contact</Link></li>
