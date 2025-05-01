@@ -8,6 +8,10 @@ class About extends Component{
     constructor(){
         super();
         console.log("Parent Constructor")
+
+        this.state = {
+            count : 0,
+        }
     }
 
     componentDidMount(){
@@ -18,14 +22,13 @@ class About extends Component{
     render(){
         console.log("Parent Render")
         return(
-            <div className=" flex-column-center">
-            <div>
-              <h1>About section</h1>
-            </div>
-      
+            <div className=" flex-column-center" style={{margin: "10vh"}}>
+           <div style={{marginBottom: "5vh"}}>
+            <h1>Created by~</h1>
+           </div>
             <UserClass name={"First child "} />
-            <UserClass name={"Second child "} />
-            <UserClass name={"Third child "} />
+            {/* <UserClass name={"Second child "} count={this.state.count}/>
+            <UserClass name={"Third child "} count={this.state.count} /> */}
           </div>
         )
     }

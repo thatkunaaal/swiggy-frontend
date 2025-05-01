@@ -1,34 +1,45 @@
 import React from "react";
 
 class UserClass extends React.Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
-    console.log(this.props.name + "Constructor")
-    this.state ={
-        count : 0,
-    }
-
+    console.log(this.props.name + "Constructor");
+    // console.log(this.props);
+    this.state = {
+      userInfo: {
+        name: "Kishan Singh",
+      },
+    };
   }
 
-  componentDidMount(){
-    console.log(this.props.name + "ComponentDidMount")
+  async componentDidMount() {
+    console.log(this.props.name + "ComponentDidMount");
+    const data = await fetch("https://api.github.com/users/thatkunaaal");
+    const jsonData = await data.json();
+
+    this.setState({ userInfo: jsonData });
+  }
+
+  componentDidUpdate() {
+    console.log(this.props.name + "ComponentDidUpdate");
+  }
+
+  componentWillUnmount() {
+    console.log(this.props.name + "ComponentWillUnmount");
   }
 
   render() {
-    const {count} = this.state;
-    console.log(this.props.name + "Render")
+    const { name, avatar_url, html_url, location, bio } = this.state.userInfo;
+    console.log(this.props.name + "Render");
     return (
-      <div className="user-card">
-        <h2>{count}</h2>
-        <button onClick={() => {
-            this.setState({
-                count : this.state.count + 1,
-            })
-        }}>Increase +</button>
-        <h2 style={{ margin: "1vh 0" }}>Name: {this.props.name}</h2>
-        <h3 style={{ margin: "1vh 0" }}>Contact: thatkunaal@gmail.com</h3>
-        <h3 style={{ margin: "1vh 0" }}>Link: github.com</h3>
+      <div class="card">
+        <div style={{display: "flex" , justifyContent : "center"}}>
+        <img style={{height: "220px" ,width : "220px"}}  src={avatar_url} />
+        </div>
+        <p className="heading">Name: {name}</p>
+        <p>Contact: thatkunaal@gmail.com</p>
+        <p>Location : {location}</p>
+        <p>{bio}</p>
       </div>
     );
   }
