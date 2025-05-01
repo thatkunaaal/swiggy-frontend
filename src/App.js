@@ -1,8 +1,8 @@
-import React from "react";
+import React, { lazy ,Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Navbar from "./component/Navbar";
 import Body from "./component/Body";
-import About from "./component/About";
+// import About from "./component/About";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Cart from "./component/Cart";
 import Error from "./component/Error";
@@ -16,6 +16,8 @@ import RestaurantMenu from "./component/RestaurantMenu";
 // const HeadingComponent = () => (
 //    <h1>Hello from functional component 🙏</h1>
 // )
+
+const About = lazy(()=> import("./component/About"));
 
 const App = () => {
   return (
@@ -37,7 +39,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />,
+        element: <Suspense fallback={<h1>Loading...</h1>}><About /></Suspense>,
       },
       {
         path: "/cart",
