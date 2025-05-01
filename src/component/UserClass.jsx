@@ -16,8 +16,8 @@ class UserClass extends React.Component {
     console.log(this.props.name + "ComponentDidMount");
     const data = await fetch("https://api.github.com/users/thatkunaaal");
     const jsonData = await data.json();
-
     this.setState({ userInfo: jsonData });
+     this.timer = setInterval(()=>console.log("React JS OP"),1000);
   }
 
   componentDidUpdate() {
@@ -26,13 +26,14 @@ class UserClass extends React.Component {
 
   componentWillUnmount() {
     console.log(this.props.name + "ComponentWillUnmount");
+    clearInterval(this.timer);
   }
 
   render() {
     const { name, avatar_url, html_url, location, bio } = this.state.userInfo;
     console.log(this.props.name + "Render");
     return (
-      <div class="card">
+      <div className="card">
         <div style={{display: "flex" , justifyContent : "center"}}>
         <img style={{height: "220px" ,width : "220px"}}  src={avatar_url} />
         </div>
